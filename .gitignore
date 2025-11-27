@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Build artifacts
+build/
+target/
+*.wasm
+*.o
+*.so
+*.dylib
+*.dll
+
+# OS files
+.DS_Store
+
+# Test artifacts
+grammars/
+
+# Docs for ZoKrates
+ZoKrates_docs.md

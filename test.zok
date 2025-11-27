@@ -1,0 +1,16 @@
+def main(private field a, field b) -> field {
+    field c = a + b;
+    return c;
+}
+
+struct Point {
+    field x;
+    field y;
+}
+
+def foo() {
+    Point p = Point { x: 1, y: 2 };
+    field z = p.x;
+    u32[3] arr = [1, 2, 3];
+    assert(arr[0] == 1);
+}

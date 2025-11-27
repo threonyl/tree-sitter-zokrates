@@ -1,0 +1,28 @@
+{
+  "name": "tree-sitter-zokrates",
+  "version": "0.1.0",
+  "description": "ZoKrates grammar for tree-sitter",
+  "main": "bindings/node",
+  "keywords": [
+    "parsing",
+    "incremental"
+  ],
+  "scripts": {
+    "test": "tree-sitter test"
+  },
+  "dependencies": {
+    "nan": "^2.14.1"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.20.0"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.zok",
+      "file-types": [
+        "zok"
+      ],
+      "injection-regex": "^zok$"
+    }
+  ]
+}

@@ -1,0 +1,331 @@
+==================
+Arrays and Initialization
+==================
+def main(field value) -> field[3] {
+    return [value, value, value];
+}
+
+---
+
+(source_file
+  (function_definition
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        type: (ty
+          (ty_basic))
+        name: (identifier)))
+    return_type: (ty
+      (ty_array
+        (ty_basic)
+        (expression
+          (primary_expression
+            (literal
+              (decimal_literal))))))
+    body: (block_statement
+      (statement
+        (return_statement
+          (expression
+            (primary_expression
+              (array_expression
+                (expression
+                  (primary_expression
+                    (identifier)))
+                (expression
+                  (primary_expression
+                    (identifier)))
+                (expression
+                  (primary_expression
+                    (identifier)))))))))))
+
+==================
+Multi-dimensional Arrays
+==================
+def identity<N>(field[N][N] t) -> field[N][N] {
+    return t;
+}
+
+def main() -> field[1][1] {
+    return identity([[0]; 1]);
+}
+
+---
+
+(source_file
+  (function_definition
+    name: (identifier)
+    (constant_generics_declaration
+      (identifier))
+    parameters: (parameter_list
+      (parameter
+        type: (ty
+          (ty_array
+            (ty_basic)
+            (expression
+              (primary_expression
+                (identifier)))
+            (expression
+              (primary_expression
+                (identifier)))))
+        name: (identifier)))
+    return_type: (ty
+      (ty_array
+        (ty_basic)
+        (expression
+          (primary_expression
+            (identifier)))
+        (expression
+          (primary_expression
+            (identifier)))))
+    body: (block_statement
+      (statement
+        (return_statement
+          (expression
+            (primary_expression
+              (identifier)))))))
+  (function_definition
+    name: (identifier)
+    return_type: (ty
+      (ty_array
+        (ty_basic)
+        (expression
+          (primary_expression
+            (literal
+              (decimal_literal))))
+        (expression
+          (primary_expression
+            (literal
+              (decimal_literal))))))
+    body: (block_statement
+      (statement
+        (return_statement
+          (expression
+            (call_expression
+              function: (expression
+                (primary_expression
+                  (identifier)))
+              (expression
+                (primary_expression
+                  (array_initializer
+                    (expression
+                      (primary_expression
+                        (array_expression
+                          (expression
+                            (primary_expression
+                              (literal
+                                (decimal_literal)))))))
+                    (expression
+                      (primary_expression
+                        (literal
+                          (decimal_literal))))))))))))))
+
+==================
+Structs and Generics
+==================
+struct B<P> {
+    field[P] a;
+}
+
+struct A<N> {
+    field[N] a;
+    B<N> b;
+}
+
+def main(A<2> a) -> bool {
+    u32 SIZE = 1 + 1;
+    A<SIZE> b = A { a: [1, 2], b: B { a: [1, 2] } } ;
+    return a == b;
+}
+
+---
+
+(source_file
+  (ty_struct_definition
+    name: (identifier)
+    (constant_generics_declaration
+      (identifier))
+    (struct_field
+      type: (ty
+        (ty_array
+          (ty_basic)
+          (expression
+            (primary_expression
+              (identifier)))))
+      name: (identifier)))
+  (ty_struct_definition
+    name: (identifier)
+    (constant_generics_declaration
+      (identifier))
+    (struct_field
+      type: (ty
+        (ty_array
+          (ty_basic)
+          (expression
+            (primary_expression
+              (identifier)))))
+      name: (identifier))
+    (struct_field
+      type: (ty
+        (ty_struct
+          (identifier)
+          (explicit_generics
+            (identifier))))
+      name: (identifier)))
+  (function_definition
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        type: (ty
+          (ty_struct
+            (identifier)
+            (explicit_generics
+              (literal
+                (decimal_literal)))))
+        name: (identifier)))
+    return_type: (ty
+      (ty_basic))
+    body: (block_statement
+      (statement
+        (definition_statement
+          (ty
+            (ty_basic))
+          (identifier)
+          value: (expression
+            (binary_expression
+              (expression
+                (primary_expression
+                  (literal
+                    (decimal_literal))))
+              (expression
+                (primary_expression
+                  (literal
+                    (decimal_literal))))))))
+      (statement
+        (definition_statement
+          (ty
+            (ty_struct
+              (identifier)
+              (explicit_generics
+                (identifier))))
+          (identifier)
+          value: (expression
+            (primary_expression
+              (struct_expression
+                name: (identifier)
+                field: (identifier)
+                value: (expression
+                  (primary_expression
+                    (array_expression
+                      (expression
+                        (primary_expression
+                          (literal
+                            (decimal_literal))))
+                      (expression
+                        (primary_expression
+                          (literal
+                            (decimal_literal)))))))
+                field: (identifier)
+                value: (expression
+                  (primary_expression
+                    (struct_expression
+                      name: (identifier)
+                      field: (identifier)
+                      value: (expression
+                        (primary_expression
+                          (array_expression
+                            (expression
+                              (primary_expression
+                                (literal
+                                  (decimal_literal))))
+                            (expression
+                              (primary_expression
+                                (literal
+                                  (decimal_literal)))))))))))))))
+      (statement
+        (return_statement
+          (expression
+            (binary_expression
+              (expression
+                (primary_expression
+                  (identifier)))
+              (expression
+                (primary_expression
+                  (identifier))))))))))
+
+==================
+Explicit Generics in Calls
+==================
+def foo<N>() -> field[N] {
+   return [42; N];
+}
+
+def main() -> field[2] {
+    field a = foo::<3>()[0];
+    return foo::<2>();
+}
+
+---
+
+(source_file
+  (function_definition
+    name: (identifier)
+    (constant_generics_declaration
+      (identifier))
+    return_type: (ty
+      (ty_array
+        (ty_basic)
+        (expression
+          (primary_expression
+            (identifier)))))
+    body: (block_statement
+      (statement
+        (return_statement
+          (expression
+            (primary_expression
+              (array_initializer
+                (expression
+                  (primary_expression
+                    (literal
+                      (decimal_literal))))
+                (expression
+                  (primary_expression
+                    (identifier))))))))))
+  (function_definition
+    name: (identifier)
+    return_type: (ty
+      (ty_array
+        (ty_basic)
+        (expression
+          (primary_expression
+            (literal
+              (decimal_literal))))))
+    body: (block_statement
+      (statement
+        (definition_statement
+          (ty
+            (ty_basic))
+          (identifier)
+          value: (expression
+            (subscript_expression
+              object: (expression
+                (call_expression
+                  function: (expression
+                    (primary_expression
+                      (identifier)))
+                  (explicit_generics
+                    (literal
+                      (decimal_literal)))))
+              index: (expression
+                (primary_expression
+                  (literal
+                    (decimal_literal))))))))
+      (statement
+        (return_statement
+          (expression
+            (call_expression
+              function: (expression
+                (primary_expression
+                  (identifier)))
+              (explicit_generics
+                (literal
+                  (decimal_literal))))))))))

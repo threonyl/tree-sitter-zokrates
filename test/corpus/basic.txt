@@ -1,0 +1,34 @@
+==================
+Basic Function
+==================
+def main(field a, field b) -> field {
+    return a + b;
+}
+
+---
+
+(source_file
+  (function_definition
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        type: (ty
+          (ty_basic))
+        name: (identifier))
+      (parameter
+        type: (ty
+          (ty_basic))
+        name: (identifier)))
+    return_type: (ty
+      (ty_basic))
+    body: (block_statement
+      (statement
+        (return_statement
+          (expression
+            (binary_expression
+              (expression
+                (primary_expression
+                  (identifier)))
+              (expression
+                (primary_expression
+                  (identifier))))))))))

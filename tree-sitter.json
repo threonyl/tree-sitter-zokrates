@@ -1,0 +1,35 @@
+{
+    "grammars": [
+        {
+            "name": "zokrates",
+            "camelcase": "ZoKrates",
+            "scope": "source.zok",
+            "file-types": [
+                "zok"
+            ],
+            "injection-regex": "^zok$"
+        }
+    ],
+    "metadata": {
+        "version": "0.1.0",
+        "license": "MIT",
+        "description": "ZoKrates grammar for tree-sitter",
+        "authors": [
+            {
+                "name": "threonyl",
+                "email": "83128427+threonyl@users.noreply.github.com"
+            }
+        ],
+        "links": {
+            "repository": "https://github.com/tree-sitter/tree-sitter-zokrates"
+        }
+    },
+    "bindings": {
+        "c": true,
+        "go": true,
+        "node": true,
+        "python": true,
+        "rust": true,
+        "swift": true
+    }
+}
