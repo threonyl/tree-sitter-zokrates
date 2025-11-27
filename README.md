@@ -31,3 +31,5 @@ tree-sitter parse test.zok
 ## References
 
 - [ZoKrates Documentation](https://zokrates.github.io/)
+
+**This work is not affiliated with the [ZoKrates](https://zokrates.github.io/introduction.html) project.**
